@@ -1,0 +1,1 @@
+setup_vendor.ps1を実行すると、hand_landmarker.taskがここへ保存されます。

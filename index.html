@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f1e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="えんぴつ見守り">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>えんぴつの持ち方見守り</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">端末内だけで判定</p>
+        <h1>えんぴつの持ち方見守り</h1>
+      </div>
+      <span id="privacyBadge" class="privacy-badge">画像は送信・保存しません</span>
+    </header>
+
+    <section class="camera-card" aria-label="カメラ映像">
+      <div id="cameraStage" class="camera-stage">
+        <video id="camera" playsinline muted></video>
+        <canvas id="overlay" aria-hidden="true"></canvas>
+        <div id="guide" class="guide">
+          <span>手と鉛筆が枠内に入るように固定</span>
+        </div>
+        <div id="warningOverlay" class="warning-overlay" hidden>
+          <strong>持ち方を確認しよう</strong>
+          <span>親指・人差し指をふわっと</span>
+        </div>
+        <div id="countdown" class="countdown" hidden></div>
+      </div>
+
+      <div class="status-row" aria-live="polite">
+        <div>
+          <span class="status-label">状態</span>
+          <strong id="statusText" class="status-value status-idle">準備前</strong>
+        </div>
+        <div class="score-box">
+          <span class="status-label">差の大きさ</span>
+          <strong id="scoreText">--</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls-card">
+      <div class="primary-controls">
+        <button id="startCameraButton" class="button button-primary" type="button">
+          カメラを開始
+        </button>
+        <button id="switchCameraButton" class="button" type="button" disabled>
+          カメラ切替
+        </button>
+        <button id="stopCameraButton" class="button" type="button" disabled>
+          停止
+        </button>
+      </div>
+
+      <div class="registration-panel">
+        <h2>1. 正しい持ち方を登録</h2>
+        <p>
+          正しく持って文字を書きながら、10秒間撮影します。
+          写真・動画ではなく、手の座標だけを端末内に保存します。
+        </p>
+        <button id="registerButton" class="button button-accent" type="button" disabled>
+          10秒登録を始める
+        </button>
+        <p id="profileInfo" class="profile-info">登録データなし</p>
+      </div>
+
+      <div class="monitor-panel">
+        <h2>2. 見守り</h2>
+        <label class="range-label" for="sensitivity">
+          判定の厳しさ
+          <span id="sensitivityText">標準</span>
+        </label>
+        <input id="sensitivity" type="range" min="1" max="5" step="1" value="3">
+        <div class="monitor-actions">
+          <button id="monitorButton" class="button button-success" type="button" disabled>
+            見守りを開始
+          </button>
+          <button id="clearProfileButton" class="button button-danger" type="button" disabled>
+            登録を削除
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <details class="details-card">
+      <summary>個人データと通信について</summary>
+      <p>
+        カメラ映像はブラウザ内で処理し、サーバーへ送信しません。
+        登録時に保存するのは、手の形を数値化した座標データだけです。
+        このページには解析・広告・外部ログ送信のコードを入れていません。
+      </p>
+      <p>
+        GitHub Pagesを開く通信と、アプリ本体・AIモデルの読み込み通信は発生します。
+        初回読み込み後は、対応ブラウザでは必要ファイルをキャッシュします。
+      </p>
+    </details>
+
+    <footer>
+      <span id="runtimeInfo">AIモデル未読込</span>
+    </footer>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
