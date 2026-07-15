@@ -18,7 +18,7 @@
   <main class="app-shell">
     <header class="app-header">
       <div>
-        <p class="eyebrow">端末内だけで判定</p>
+        <p class="eyebrow">端末内だけでGOOD/BAD判定</p>
         <h1>えんぴつの持ち方見守り</h1>
       </div>
       <span id="privacyBadge" class="privacy-badge">画像は送信・保存しません</span>
@@ -33,7 +33,7 @@
         </div>
         <div id="warningOverlay" class="warning-overlay" hidden>
           <strong>持ち方を確認しよう</strong>
-          <span>親指・人差し指をふわっと</span>
+          <span>登録したBADの形に近づいています</span>
         </div>
         <div id="countdown" class="countdown" hidden></div>
       </div>
@@ -44,7 +44,7 @@
           <strong id="statusText" class="status-value status-idle">準備前</strong>
         </div>
         <div class="score-box">
-          <span class="status-label">差の大きさ</span>
+          <span class="status-label">BADへの近さ</span>
           <strong id="scoreText">--</strong>
         </div>
       </div>
@@ -64,15 +64,31 @@
       </div>
 
       <div class="registration-panel">
-        <h2>1. 正しい持ち方を登録</h2>
+        <h2>1. GOODとBADを登録</h2>
         <p>
-          正しく持って文字を書きながら、10秒間撮影します。
-          写真・動画ではなく、手の座標だけを端末内に保存します。
+          それぞれ文字を書きながら10秒間撮影します。
+          写真・動画ではなく、正規化した手の座標だけを端末内に保存します。
         </p>
-        <button id="registerButton" class="button button-accent" type="button" disabled>
-          10秒登録を始める
-        </button>
-        <p id="profileInfo" class="profile-info">登録データなし</p>
+        <div class="registration-grid">
+          <div class="registration-item registration-good">
+            <strong>GOOD</strong>
+            <span>正しい持ち方で書く</span>
+            <button id="registerGoodButton" class="button button-success" type="button" disabled>
+              GOODを10秒登録
+            </button>
+          </div>
+          <div class="registration-item registration-bad">
+            <strong>BAD</strong>
+            <span>一番よく戻る持ち方で書く</span>
+            <button id="registerBadButton" class="button button-danger" type="button" disabled>
+              BADを10秒登録
+            </button>
+          </div>
+        </div>
+        <p class="registration-note">
+          BAD登録では、無理に複数の崩れ方を混ぜず、まず一番よく起きる持ち方を登録してください。
+        </p>
+        <p id="profileInfo" class="profile-info">GOOD・BADとも未登録</p>
       </div>
 
       <div class="monitor-panel">
@@ -94,10 +110,14 @@
     </section>
 
     <details class="details-card">
-      <summary>個人データと通信について</summary>
+      <summary>判定方法と個人データについて</summary>
+      <p>
+        現在の手の形を、登録したGOOD群とBAD群の両方に比較し、どちらへ近いかを判定します。
+        BAD寄りの状態が約3秒続いた場合だけ通知します。
+      </p>
       <p>
         カメラ映像はブラウザ内で処理し、サーバーへ送信しません。
-        登録時に保存するのは、手の形を数値化した座標データだけです。
+        保存するのは手の形を数値化した座標データだけです。
         このページには解析・広告・外部ログ送信のコードを入れていません。
       </p>
       <p>

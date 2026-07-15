@@ -1,7 +1,7 @@
 {
   "name": "えんぴつの持ち方見守り",
   "short_name": "えんぴつ見守り",
-  "description": "カメラ映像を端末内で処理し、鉛筆の持ち方を見守るWebアプリ",
+  "description": "GOODとBADを端末内登録し、鉛筆の持ち方を見守るWebアプリ",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

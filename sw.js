@@ -1,4 +1,4 @@
-const CACHE_NAME = "pencil-grip-checker-v1";
+const CACHE_NAME = "pencil-grip-checker-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",
